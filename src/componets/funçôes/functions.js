@@ -93,8 +93,7 @@ export default class funcoes {
       //dados.push(null);
      */ return (obj = { marcardor: marcardor, dados: dados });
     } else {
-      dados.push(null);
-      return (obj = { marcardor: null, dados: null });
+      throw "coloque uma especialidade";
     }
   }
 }

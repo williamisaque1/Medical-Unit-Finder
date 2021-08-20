@@ -5,7 +5,8 @@ const { width } = Dimensions.get("window");
 //console.log("estao me");
 export default function menu({ inf }) {
   // var inf = props;
-  console.log(`esta correto  ${inf.length == 0}`);
+  //console.log(`esta correto  ${inf.length == 0}`);
+  console.log(`esta correto 2  ${inf}`);
   //console.log(`esta esse conteudo  ${JSON.stringify(inf[0])}`);
 
   return (

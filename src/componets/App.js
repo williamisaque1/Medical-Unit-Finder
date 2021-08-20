@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   StyleSheet,
   Text,
@@ -7,6 +7,8 @@ import {
   ActivityIndicator,
   Dimensions,
   TextInput,
+  Alert,
+  Vibration,
 } from "react-native";
 import * as Location from "expo-location";
 import MapView from "react-native-maps";
@@ -21,14 +23,14 @@ export default function App() {
   const [detalhes, setDetalhes] = useState([]);
   const [active, setActive] = useState(false);
   const [save, setSave] = useState(<View></View>);
-
+  const input = useRef();
+  var v = "ola";
   useEffect(() => {
-    (async function () {
-      let location = {};
+    (async function permisao() {
       let { status } = await Location.requestForegroundPermissionsAsync();
       console.log(status);
-      if (status === "granted") {
-        try {
+      try {
+        if (status === "granted") {
           await Location.watchPositionAsync({}, (results) => {
             const { latitude, longitude } = results.coords;
             console.log(latitude + "  " + longitude + "|");
@@ -38,71 +40,49 @@ export default function App() {
               latitudeDelta: 0.0042,
               longitudeDelta: 0.00203,
             });
-            //  funcoes.localizacaoAtual(origin);
           });
-          /* var location = await Location.getCurrentPositionAsync({
-            eaccuracy: 1,
-            timeInterval: 3000,
-          });*/
 
           /* await Location.geocodeAsync(
             "Tancredo Gomes Toledo, Jardim Sandra Maria 30"
           );*/
-
-          /*   maxAge: 10000,*/
-          /*enableHighAccuracy: true,*/
-
-          //console.log(JSON.stringify())
-          /*  console.log(
-            "nullloo  1" +
-              location.coords.longitude +
-              "|" +
-              JSON.stringify(location)
-          );*/
-
           //https://mobile-aceite.tcu.gov.br/mapa-da-saude/rest/estabelecimentos/latitude/-23.0102177/longitude/-45.5560553/raio/
-        } catch (e) {
-          console.log("erro" + e);
-          /*  console.log(
-            "nullloo 2" +
-              // location.coords.longitude +
-              "|" +
-              JSON.stringify(location)
-          );*/
-          if (location == null) {
-            console.log("esta dando erro", e);
-
-            alert("falha na Geolocation ", "sua posição não foi detectada", [
-              { text: "OK", onPress: () => console.log("OK Pressed") },
-            ]);
-          }
+        } else {
+          Alert.alert(
+            "Atenção",
+            "permita o aplicativo acessar a sua localização ",
+            [
+              {
+                onPress: () => permisao(),
+              },
+            ]
+          );
         }
-      } else {
-        throw new Error("Location não foi permitida");
+      } catch (e) {
+        console.log("erro" + e);
+
+        Alert.alert(
+          "falha na Geolocation ",
+          "sua posição não foi detectada verifique se a sua localização esta ativada",
+          [{ text: "OK", onPress: () => permisao() }]
+        );
       }
     })();
   }, []);
+
   useEffect(() => {
-    console.log(detalhes == null);
-    console.log(detalhes == 0);
-    if (detalhes != undefined) {
-      console.log("a");
+    if (detalhes?.length !== 0 && unidades?.length !== 0) {
       setSave(<Menu inf={detalhes}></Menu>);
-      setActive(false);
-    } else if (detalhes == null) {
-      setSave(
-        <View>
-          <Text>coloque uma especialidade</Text>
-        </View>
-      );
-    } else if (detalhes == " ") {
-      setSave(
-        <View>
-          <Text>não encontrado</Text>
-        </View>
-      );
     }
-  }, [detalhes, unidades]);
+    if (detalhes?.length == 0 && active == true) {
+      setSave(null);
+      Alert.alert("Atenção", "especialidade não encontrada");
+      console.log("chegou aqui");
+      Vibration.vibrate(300);
+      input.current.clear();
+
+      //  setvalorUsr("");
+    }
+  }, [detalhes]);
 
   return (
     <View style={styles.container}>
@@ -126,7 +106,7 @@ export default function App() {
       </MapView>
 
       <View style={styles.descricao}></View>
-      {active == false || detalhes == null ? (
+      {active == false && detalhes != null ? (
         save
       ) : (
         <ActivityIndicator
@@ -140,15 +120,19 @@ export default function App() {
         <Ionicons
           name="ios-search"
           onPress={async (e) => {
+            setActive(true);
             try {
-              //await funcoes.marcadores(valorUsr, origin);
-              setActive(true);
               setUnidades(
                 (await funcoes.marcadores(valorUsr, origin)).marcardor
               );
-
               setDetalhes((await funcoes.marcadores(valorUsr, origin)).dados);
+              setActive(false);
             } catch (error) {
+              setDetalhes(null);
+              setUnidades(null);
+              Alert.alert("Atenção", error);
+              setActive(false);
+              Vibration.vibrate(300);
               console.log(error);
             }
           }}
@@ -157,11 +141,13 @@ export default function App() {
           {" "}
         </Ionicons>
         <TextInput
+          ref={input}
           placeholder="search here"
           placeholderTextColor="#008"
           autoCapitalize="none"
           style={{ flex: 1, padding: 0 }}
           onChangeText={(val) => {
+            //  console.log(val + "" + valorUsr);
             setvalorUsr(val);
           }}
         >
