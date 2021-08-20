@@ -16,10 +16,13 @@ export default function menu({ inf }) {
         horizontal
         showsHorizontalScrollIndicator={false}
         pagingEnabled
+        onScrollEndDrag={() => {
+          console.log("fui ativado");
+        }}
         onMomentumScrollEnd={(e) => {
           const scroll = e.nativeEvent.contentOffset.x;
-
-          console.log(`evento ${e.nativeEvent.contentOffset.x}`);
+          //console.log(e.nativeEvent);
+          // console.log(`evento ${e.nativeEvent.contentOffset.x}`);
 
           const place =
             e.nativeEvent.contentOffset.x > 0
@@ -27,7 +30,7 @@ export default function menu({ inf }) {
                   e.nativeEvent.contentOffset.x / Dimensions.get("window").width
                 )
               : 0;
-          console.log(`place  ${place}`);
+          //  console.log(`place  ${place}`);
 
           const { lat, long } = inf[place];
 

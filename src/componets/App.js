@@ -79,8 +79,7 @@ export default function App() {
       console.log("chegou aqui");
       Vibration.vibrate(300);
       input.current.clear();
-
-      //  setvalorUsr("");
+      setvalorUsr("");
     }
   }, [detalhes]);
 
@@ -119,7 +118,7 @@ export default function App() {
       <View style={styles.seachbox}>
         <Ionicons
           name="ios-search"
-          onPress={async (e) => {
+          onPress={async () => {
             setActive(true);
             try {
               setUnidades(
