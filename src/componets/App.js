@@ -42,8 +42,11 @@ export default function App() {
             });
           });
 
-          /* await Location.geocodeAsync(
-            "Tancredo Gomes Toledo, Jardim Sandra Maria 30"
+          /* console.log(
+            "localiza",
+            await Location.geocodeAsync(
+              "Tancredo Gomes Toledo, Jardim Sandra Maria 30"
+            )
           );*/
           //https://mobile-aceite.tcu.gov.br/mapa-da-saude/rest/estabelecimentos/latitude/-23.0102177/longitude/-45.5560553/raio/
         } else {
@@ -72,6 +75,12 @@ export default function App() {
   useEffect(() => {
     if (detalhes?.length !== 0 && unidades?.length !== 0) {
       setSave(<Menu inf={detalhes}></Menu>);
+      (async () => {
+        if (detalhes !== null) {
+          console.log("detalhamento", detalhes.length);
+          // console.log(await funcoes.verificacaoDeCordenadas(detalhes));
+        }
+      })();
     }
     if (detalhes?.length == 0 && active == true) {
       setSave(null);

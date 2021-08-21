@@ -23,6 +23,41 @@ export default class funcoes {
 
     mapView.animateCamera(camera, { duration: 2500 });
   }
+  /* static verificacaoDeCordenadas(dados) {
+    var a = [];
+    let j = 0;
+    let i = 0;
+
+    // console.log("aaa", a);
+    function calculo() {
+      for (i = 0; i < dados.length; i++) {
+        for (j = 0; j < dados.length; j++) {
+          //  console.log(5 - (i - 1));
+
+          if (dados[i].nomeFantasia == "OTORRINOCENTRO TAUBATE") {
+            //a.push(dados[i]);
+            console.log("positivo");
+          }
+        }
+      }
+      return a;
+    }
+
+    // console.log("estou incluido", a.length);
+    calculo().map((a, i) => {
+      if (a.nomeFantasia == "ESPACO EQUILYBRIO TAUBATE") {
+        ////   console.log(`tamanho ${a.nomeFantasia} `);
+      }
+    });
+
+    // a.push(dados[i].nomeFantasia);
+    /*
+           console.log(
+              `${dados[i].lat} coordenadas da unidade ${dados[j].nomeFantasia} se repetem  ${dados[j].lat} || ${i}`
+            );
+            
+  }
+  */
   static async marcadores(valorUsr, origin) {
     const marcardor = [];
     var dados = [];
@@ -44,11 +79,11 @@ export default class funcoes {
 
           for (let i = 0; i < response.data.length; i++) {
             // console.log(response.data[i].cnpj);
-            console.log(
+            /*console.log(
               `esta contido: ${response.data[i].descricaoCompleta
                 .toLowerCase()
                 .includes(valorUsr)}`
-            );
+            );*/
 
             if (
               response.data[i].descricaoCompleta
@@ -59,7 +94,7 @@ export default class funcoes {
                 <Marker
                   onPress={() => {
                     console.log(
-                      ` nome: ${response.data[i].nomeFantasia} latitude  ${response.data[i].lat}  longitude  ${response.data[i].long} `
+                      `${i} nome: ${response.data[i].nomeFantasia} latitude  ${response.data[i].lat}  longitude  ${response.data[i].long} `
                     );
                   }}
                   title={response.data[i].nomeFantasia}
@@ -77,6 +112,7 @@ export default class funcoes {
               dados.push(response.data[i]);
             }
           }
+
           return (obj = { marcardor: marcardor, dados: dados });
           console.log(
             `\n dados estao  aki${JSON.stringify(response.data[0].codCnes)}`
@@ -93,7 +129,7 @@ export default class funcoes {
       //dados.push(null);
      */ return (obj = { marcardor: marcardor, dados: dados });
     } else {
-      throw "coloque uma especialidade";
+      throw "coloque uma especialidade ";
     }
   }
 }
