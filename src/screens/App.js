@@ -13,8 +13,8 @@ import {
 import * as Location from "expo-location";
 import MapView from "react-native-maps";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import funcoes from "./funçôes/functions";
-import Menu from "./menu";
+import funcoes from "../componets/funçôes/functions";
+import Menu from "../componets/menu";
 const { width } = Dimensions.get("window");
 export default function App() {
   const [origin, setOrigin] = useState(null);
