@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -6,12 +6,30 @@ import {
   StatusBar,
   Dimensions,
   TouchableOpacity,
+  Animated,
 } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 const height = Dimensions.get("window").height;
+
 export default function Home({ navigation }) {
+  const [margin, setMargin] = useState(new Animated.Value(-55));
+  const [size, setSize] = useState(new Animated.Value(0));
   useEffect(() => {
-    console.log(height);
+    //const Ani = Animated.createAnimatedComponent(Text);
+    Animated.sequence([
+      Animated.timing(size, {
+        toValue: 16,
+        duration: 1500,
+        useNativeDriver: false,
+      }),
+      Animated.spring(margin, {
+        toValue: 60,
+
+        bounciness: 35,
+
+        useNativeDriver: false,
+      }),
+    ]).start();
   }, []);
 
   return (
@@ -21,8 +39,16 @@ export default function Home({ navigation }) {
         backgroundColor="black"
         translucent={false}
       ></StatusBar>
+      <Animated.Text
+        Animation="tada"
+        useNativeDriver
+        iterantionCount={Infinity}
+        style={[styles.titulo, { marginTop: margin }]}
+      >
+        {" "}
+        Medical Unit Finder
+      </Animated.Text>
       <View style={styles.containerTitulo}>
-        <Text style={styles.titulo}> Medical Unit Finder</Text>
         <TouchableOpacity
           style={styles.touch1}
           onPress={() => {
@@ -41,9 +67,9 @@ export default function Home({ navigation }) {
         </TouchableOpacity>
       </View>
       <View style={styles.containerRodape}>
-        <Text style={styles.tituloRodape}>
+        <Animated.Text style={[styles.tituloRodape, { fontSize: size }]}>
           desenvolvido por: vitor correia e william isaque
-        </Text>
+        </Animated.Text>
       </View>
     </View>
   );
@@ -59,7 +85,11 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textShadowColor: "red",
     textShadowOffset: { width: 10, height: 10 },
+    position: "absolute",
     textShadowRadius: 8,
+    //marginTop: this.margin,
+    // backgroundColor: "red",
+    alignSelf: "center",
   },
 
   containerTitulo: {
@@ -80,7 +110,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 15,
   },
   tituloRodape: {
-    fontSize: 16,
     color: "white",
     paddingBottom: 15,
     //textDecorationLine: "underline",
