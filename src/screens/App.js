@@ -15,7 +15,10 @@ import MapView from "react-native-maps";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import funcoes from "../componets/funçôes/functions";
 import Menu from "../componets/menu";
+import axios from "axios";
+
 const { width } = Dimensions.get("window");
+
 export default function App() {
   const [origin, setOrigin] = useState(null);
   const [unidades, setUnidades] = useState([]);
@@ -33,10 +36,11 @@ export default function App() {
         if (status === "granted") {
           await Location.watchPositionAsync({}, (results) => {
             const { latitude, longitude } = results.coords;
-            console.log(latitude + "  " + longitude + "|");
+            //  console.log(latitude + "  " + longitude + "|");
+            // ,
             setOrigin({
-              latitude: latitude,
-              longitude: longitude,
+              latitude: latitude, //-23.0101861,
+              longitude: longitude, //-45.5561187,
               latitudeDelta: 0.0042,
               longitudeDelta: 0.00203,
             });
@@ -77,7 +81,7 @@ export default function App() {
       setSave(<Menu inf={detalhes}></Menu>);
       (async () => {
         if (detalhes !== null) {
-          console.log("detalhamento", detalhes.length);
+          //    console.log("detalhamento", detalhes.length);
           // console.log(await funcoes.verificacaoDeCordenadas(detalhes));
         }
       })();
@@ -85,7 +89,7 @@ export default function App() {
     if (detalhes?.length == 0 && active == true) {
       setSave(null);
       Alert.alert("Atenção", "especialidade não encontrada");
-      console.log("chegou aqui");
+      // console.log("chegou aqui");
       Vibration.vibrate(300);
       input.current.clear();
       setvalorUsr("");
@@ -130,10 +134,13 @@ export default function App() {
           onPress={async () => {
             setActive(true);
             try {
-              setUnidades(
-                (await funcoes.marcadores(valorUsr, origin)).marcardor
+              const { dados, marcardor } = await funcoes.marcadores(
+                valorUsr,
+                origin
               );
-              setDetalhes((await funcoes.marcadores(valorUsr, origin)).dados);
+
+              setUnidades(marcardor);
+              setDetalhes(dados);
               setActive(false);
             } catch (error) {
               setDetalhes(null);

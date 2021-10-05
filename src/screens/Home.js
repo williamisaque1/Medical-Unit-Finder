@@ -9,9 +9,11 @@ import {
   Animated,
 } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
-const height = Dimensions.get("window").height;
 
+const height = Dimensions.get("window").height;
+import config from "../../config.js";
 export default function Home({ navigation }) {
+  // console.log(config);
   const [margin, setMargin] = useState(new Animated.Value(-55));
   const [size, setSize] = useState(new Animated.Value(0));
   useEffect(() => {

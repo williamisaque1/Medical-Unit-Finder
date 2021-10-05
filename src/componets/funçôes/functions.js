@@ -1,12 +1,13 @@
+//import Apps from '../../src/componets/index.js';
 import axios from "axios";
 import React from "react";
 import { Marker } from "react-native-maps";
-
+import * as Location from "expo-location";
 export default class funcoes {
   static localizacaoAtual(origin) {
-    console.log(
+    /*   console.log(
       ` ${origin} latitude ${origin.latitude} e longitude ${origin.longitude}`
-    );
+    );*/
     let region = {
       latitude: origin.latitude,
       longitude: origin.longitude,
@@ -23,41 +24,7 @@ export default class funcoes {
 
     mapView.animateCamera(camera, { duration: 2500 });
   }
-  /* static verificacaoDeCordenadas(dados) {
-    var a = [];
-    let j = 0;
-    let i = 0;
 
-    // console.log("aaa", a);
-    function calculo() {
-      for (i = 0; i < dados.length; i++) {
-        for (j = 0; j < dados.length; j++) {
-          //  console.log(5 - (i - 1));
-
-          if (dados[i].nomeFantasia == "OTORRINOCENTRO TAUBATE") {
-            //a.push(dados[i]);
-            console.log("positivo");
-          }
-        }
-      }
-      return a;
-    }
-
-    // console.log("estou incluido", a.length);
-    calculo().map((a, i) => {
-      if (a.nomeFantasia == "ESPACO EQUILYBRIO TAUBATE") {
-        ////   console.log(`tamanho ${a.nomeFantasia} `);
-      }
-    });
-
-    // a.push(dados[i].nomeFantasia);
-    /*
-           console.log(
-              `${dados[i].lat} coordenadas da unidade ${dados[j].nomeFantasia} se repetem  ${dados[j].lat} || ${i}`
-            );
-            
-  }
-  */
   static async marcadores(valorUsr, origin) {
     const marcardor = [];
     var dados = [];
@@ -68,66 +35,55 @@ export default class funcoes {
       } usuario digitou ${valorUsr}`
     );
     if (valorUsr !== "") {
+      console.log("lati" + origin.latitude + "log" + origin.longitude);
       await axios
-        .get(
-          `http://mobile-aceite.tcu.gov.br/mapa-da-saude/rest/estabelecimentos/latitude/${origin.latitude}/longitude/${origin.longitude}/raio/10/?categoria=CLÍNICA`
+        .post(
+          "https://back-end-medical-unit-finder.herokuapp.com/cordenadas",
+          origin
         )
-        //  "http://mobile-aceite.tcu.gov.br/mapa-da-saude/rest/estabelecimentos/?municipio=taubat%C3%A9"
         .then(function (response) {
-          // console.log(response.data);
           console.log(`tamanho: ${response.data.length}`);
+          console.log("dados" + response.data);
+          //  "http://mobile-aceite.tcu.gov.br/mapa-da-saude/rest/estabelecimentos/?municipio=taubat%C3%A9"
 
           for (let i = 0; i < response.data.length; i++) {
-            // console.log(response.data[i].cnpj);
-            /*console.log(
-              `esta contido: ${response.data[i].descricaoCompleta
-                .toLowerCase()
-                .includes(valorUsr)}`
-            );*/
-
             if (
               response.data[i].descricaoCompleta
                 .toLowerCase()
                 .includes(valorUsr)
             ) {
-              marcardor.push(
-                <Marker
-                  onPress={() => {
-                    console.log(
-                      `${i} nome: ${response.data[i].nomeFantasia} latitude  ${response.data[i].lat}  longitude  ${response.data[i].long} `
-                    );
-                  }}
-                  title={response.data[i].nomeFantasia}
-                  key={response.data[i].codUnidade}
-                  description={response.data[i].descricaoCompleta}
-                  icon={{
-                    uri: "https://img.icons8.com/emoji/48/000000/hospital-emoji.png",
-                  }}
-                  coordinate={{
-                    latitude: response.data[i].lat,
-                    longitude: response.data[i].long,
-                  }}
-                ></Marker>
-              );
+              console.log(response.data[i]);
               dados.push(response.data[i]);
             }
           }
-
-          return (obj = { marcardor: marcardor, dados: dados });
-          console.log(
-            `\n dados estao  aki${JSON.stringify(response.data[0].codCnes)}`
-          );
-
-          console.log("||" + "||");
         })
         .catch(function (error) {
-          throw "erro de internet";
+          throw `erro de internet ${error}`;
         });
+
+      for (const index of dados) {
+        marcardor.push(
+          <Marker
+            onPress={() => {
+              console.log(
+                `${index} nome: ${dados[index].nomeFantasia} latitude  ${dados[index].lat}  longitude  ${dados[index].long} `
+              );
+            }}
+            title={index.nomeFantasia}
+            key={index.codUnidade}
+            description={index.descricaoCompleta}
+            icon={{
+              uri: "https://img.icons8.com/emoji/48/000000/hospital-emoji.png",
+            }}
+            coordinate={{
+              latitude: index.lat,
+              longitude: index.long,
+            }}
+          ></Marker>
+        );
+      }
+      console.log("marcador " + marcardor.length);
       return (obj = { marcardor: marcardor, dados: dados });
-      /*} else {
-      console.log("passou aqui");
-      //dados.push(null);
-     */ return (obj = { marcardor: marcardor, dados: dados });
     } else {
       throw "coloque uma especialidade ";
     }
