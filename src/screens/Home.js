@@ -60,7 +60,12 @@ export default function Home({ navigation }) {
           <Ionicons style={styles.icone1} name="map-outline"></Ionicons>
           <Text style={styles.textInicio}>inicio</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.touch2}>
+        <TouchableOpacity
+          style={styles.touch2}
+          onPress={() => {
+            navigation.navigate("configuracoes");
+          }}
+        >
           <Ionicons
             style={[styles.icone1, styles.icone2]}
             name="settings-outline"
