@@ -1,5 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useState, useEffect, useRef } from "react";
+
 import {
   StyleSheet,
   Text,
@@ -9,6 +10,7 @@ import {
   TextInput,
   Alert,
   Vibration,
+  Keyboard,
 } from "react-native";
 import * as Location from "expo-location";
 import MapView from "react-native-maps";
@@ -133,7 +135,9 @@ export default function App() {
           name="ios-search"
           onPress={async () => {
             setActive(true);
+
             try {
+              Keyboard.dismiss();
               const { dados, marcardor } = await funcoes.marcadores(
                 valorUsr,
                 origin

@@ -1,11 +1,14 @@
-import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import React, { useState, useEffect, useRef } from "react";
+import { View, Text, StyleSheet, Button } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import { LinearGradient } from "expo-linear-gradient";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
+//setmodal(place);
+//modalizeRef.current?.open();
 export default function Configuracoes() {
   const [kms, setKms] = useState([2, 4, 6, 8, 10]);
+
   return (
     <View style={styles.container}>
       <LinearGradient
@@ -14,6 +17,7 @@ export default function Configuracoes() {
         style={{ flex: 1 }}
       >
         <Text style={styles.textoInformativo}> km do raio de busca </Text>
+
         <View style={styles.viewPicker}>
           <Picker
             mode={"dropdown"}
@@ -43,7 +47,7 @@ export default function Configuracoes() {
               <Picker.Item
                 style={styles.pickerItem}
                 key={`${km}`}
-                label={`${km} KM`}
+                label={` ${km == 2 ? `${km} KM (padrão)` : `${km} KM `}`}
                 value={`${km}`}
               />
             ))}
@@ -76,7 +80,7 @@ const styles = StyleSheet.create({
   viewPicker: {
     alignSelf: "center",
     backgroundColor: "black",
-    width: "40%",
+    width: "68%",
     marginTop: "10%",
   },
   picker: {

@@ -1,9 +1,11 @@
 //import Apps from '../../src/componets/index.js';
 import axios from "axios";
-import React from "react";
+import React, { useRef } from "react";
 import { Marker } from "react-native-maps";
 import * as Location from "expo-location";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+
+var data;
 export default class funcoes {
   static localizacaoAtual(origin) {
     /*   console.log(
@@ -30,6 +32,7 @@ export default class funcoes {
     const marcardor = [];
     var dados = [];
     var obj = {};
+    let model;
     console.log(
       ` ${valorUsr == ""}minha latitude ${
         origin.latitude
@@ -40,7 +43,7 @@ export default class funcoes {
       console.log("lati" + origin.latitude + "log" + origin.longitude);
       let km;
       if ((await AsyncStorage.getItem("km")) == null) {
-        km = 4;
+        km = 2;
       } else {
         km = await AsyncStorage.getItem("km");
       }
@@ -78,6 +81,9 @@ export default class funcoes {
         marcardor.push(
           <Marker
             onPress={() => {
+              //console.log(<Model conteudo={index}> </Model>);
+              //  data = index;
+              //this.selecionado();
               console.log(
                 `${index} nome: ${index.nomeFantasia} latitude  ${index.lat}  longitude  ${index.long} `
               );
@@ -101,4 +107,8 @@ export default class funcoes {
       throw "coloque uma especialidade ";
     }
   }
+  /* static selecionado() {
+    console.log("dadoss" + JSON.stringify(data));
+    return data;
+  }*/
 }
