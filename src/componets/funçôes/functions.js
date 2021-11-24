@@ -50,8 +50,8 @@ export default class funcoes {
 
       await axios
         .post(
-          "https://back-end-medical-unit-finder.herokuapp.com/cordenadas",
-          //"http://192.168.0.17:8000/cordenadas",
+          // "https://back-end-medical-unit-finder.herokuapp.com/cordenadas",
+          "http://192.168.0.17:8000/cordenadas",
           {
             origin,
             km,
