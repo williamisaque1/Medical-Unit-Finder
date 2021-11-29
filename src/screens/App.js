@@ -29,6 +29,7 @@ export default function App() {
   const [active, setActive] = useState(false);
   const [save, setSave] = useState(<View></View>);
   const input = useRef();
+  const mapa = useRef(null);
   var v = "ola";
   useEffect(() => {
     (async function permisao() {
@@ -164,6 +165,17 @@ export default function App() {
           placeholder="search here"
           placeholderTextColor="#008"
           autoCapitalize="none"
+          onSubmitEditing={async (e) => {
+            setActive(true);
+            const { dados, marcardor } = await funcoes.marcadores(
+              valorUsr,
+              origin
+            );
+
+            setUnidades(marcardor);
+            setDetalhes(dados);
+            setActive(false);
+          }}
           style={{ flex: 1, padding: 0 }}
           onChangeText={(val) => {
             //  console.log(val + "" + valorUsr);

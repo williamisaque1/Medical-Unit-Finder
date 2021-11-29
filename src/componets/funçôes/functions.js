@@ -55,6 +55,7 @@ export default class funcoes {
           {
             origin,
             km,
+            especialidade: valorUsr,
           }
         )
         .then(function (response) {
@@ -63,14 +64,14 @@ export default class funcoes {
           //  "http://mobile-aceite.tcu.gov.br/mapa-da-saude/rest/estabelecimentos/?municipio=taubat%C3%A9"
 
           for (let i = 0; i < response.data.length; i++) {
-            if (
+            /*if (
               response.data[i].descricaoCompleta
                 .toLowerCase()
                 .includes(valorUsr)
-            ) {
-              //  console.log(response.data[i]);
-              dados.push(response.data[i]);
-            }
+            ) {*/
+            //  console.log(response.data[i]);
+            dados.push(response.data[i]);
+            // }
           }
         })
         .catch(function (error) {
@@ -89,8 +90,8 @@ export default class funcoes {
               );
             }}
             title={index.nomeFantasia}
-            key={index.codUnidade}
-            description={index.descricaoCompleta}
+            key={index.places_id}
+            description={index.endereco}
             icon={{
               uri: "https://img.icons8.com/emoji/48/000000/hospital-emoji.png",
             }}
