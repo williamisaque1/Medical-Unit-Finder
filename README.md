@@ -13,3 +13,14 @@ Medical Unit Finder: aplicativo para a localização E indicação de unidades d
 - React-native-permissions
 
 # Imagens
+Tela inicial 
+![image](https://user-images.githubusercontent.com/63307185/147485838-d17e6c16-3f71-4488-95ca-af2e61e75a2f.png)
+Configuraçôes 
+![image](https://user-images.githubusercontent.com/63307185/147485931-35a71e47-79d7-4414-a734-c64cef046448.png)
+Busca de especialidade
+![image](https://user-images.githubusercontent.com/63307185/147486204-c0290b84-f692-4d02-8825-82a034143ffd.png)
+Informçôes detalhadas sobre a unidade 
+![image](https://user-images.githubusercontent.com/63307185/147486274-14b1ae2e-1052-4fea-bbc0-8e98ec0f17e7.png)
+
+
+
