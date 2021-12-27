@@ -1,5 +1,5 @@
 # Medical-Unit-Finder
-Medical Unit Finder: aplicativo para a localização E indicação de unidades de atendimento médico
+Medical Unit Finder: aplicativo para a localização E indicação de unidades de atendimento médico.
 # Linguagem, frameworks e ferramentas utilizadas
 
 - React Native
