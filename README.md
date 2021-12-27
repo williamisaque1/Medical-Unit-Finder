@@ -25,7 +25,7 @@ Medical Unit Finder: aplicativo para a localização E indicação de unidades d
  <img src="https://user-images.githubusercontent.com/63307185/147486204-c0290b84-f692-4d02-8825-82a034143ffd.png"/>
  
   
-  <h2>Informçôes detalhadas sobre a unidade  </h2>
+  <h2>Informções detalhadas sobre a unidade  </h2>
  <img src="https://user-images.githubusercontent.com/63307185/147486274-14b1ae2e-1052-4fea-bbc0-8e98ec0f17e7.png"/>
   </div>
 
